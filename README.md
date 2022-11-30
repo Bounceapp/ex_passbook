@@ -1,9 +1,21 @@
-# Passbook
+# Passbook for Elixir [![Hex pm](https://img.shields.io/hexpm/v/passbook.svg?style=flat)](https://hex.pm/packages/passbook) [![hex.pm downloads](https://img.shields.io/hexpm/dt/passbook.svg?style=flat)](https://hex.pm/packages/passbook)
 
 Elixir library to create Apple Wallet (.pkpass) files (Apple Wallet has previously been known as Passbook in iOS 6 to iOS 8).
 
 See the [Wallet Topic Page](https://developer.apple.com/wallet/) and the
 [Wallet Developer Guide](https://developer.apple.com/library/ios/documentation/UserExperience/Conceptual/PassKit_PG/index.html#//apple_ref/doc/uid/TP40012195) for more information about Apple Wallet.
+
+## Installation
+
+This package can be installed by adding `passbook` to your list of dependencies in `mix.exs`:
+
+```elixir
+def deps do
+  [
+    {:passbook, "~> 0.1.0"}
+  ]
+end
+```
 
 ## Getting Started
 
@@ -25,7 +37,7 @@ See the [Wallet Topic Page](https://developer.apple.com/wallet/) and the
     $ openssl pkcs12 -in "Certificates.p12" -nocerts -out key.pem
 ```
 
-You will be asked for an export password (or export phrase). In this example it will be `123456`, the script will use this as an argument to output the desired `.pkpass`
+You will be asked for an export password (or export phrase), which you need to use when generating the `.pkpass` files.
 
 ## Usage
 
