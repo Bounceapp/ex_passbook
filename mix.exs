@@ -7,7 +7,18 @@ defmodule Passbook.MixProject do
       version: "0.1.0",
       elixir: "~> 1.13",
       start_permanent: Mix.env() == :prod,
-      deps: deps()
+      description: "Elixir library to create Apple Wallet (.pkpass) files.",
+      package: package(),
+      deps: deps(),
+      # Docs
+      name: "Passbook",
+      source_url: "https://github.com/Bounceapp/ex_passbook",
+      homepage_url: "https://github.com/Bounceapp/ex_passbook",
+      docs: [
+        # The main page in the docs
+        main: "Passbook",
+        extras: ["README.md"]
+      ]
     ]
   end
 
@@ -22,7 +33,16 @@ defmodule Passbook.MixProject do
   defp deps do
     [
       {:jason, "~> 1.4"},
-      {:nested_filter, "~> 1.2.2"}
+      {:nested_filter, "~> 1.2.2"},
+      {:ex_doc, "~> 0.24", only: :dev, runtime: false}
+    ]
+  end
+
+  defp package() do
+    [
+      files: ~w(lib .formatter.exs mix.exs README* LICENSE*),
+      licenses: ["MIT"],
+      links: %{"GitHub" => "https://github.com/Bounceapp/ex_passbook"}
     ]
   end
 end
