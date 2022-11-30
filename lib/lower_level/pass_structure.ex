@@ -35,7 +35,7 @@ defmodule Passbook.PassStructure do
     ]
     def encode(struct, opts) do
       Jason.Encode.map(
-        %{Map.from_struct(struct) | transit_type: @transit_mapping[struct.transit_type]},
+        %{struct | transit_type: @transit_mapping[struct.transit_type]},
         opts
       )
     end

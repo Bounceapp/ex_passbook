@@ -20,6 +20,9 @@ defmodule Passbook.MixProject do
 
   # Run "mix help deps" to learn about dependencies.
   defp deps do
-    [{:jason, "~> 1.4"}]
+    [
+      {:jason, "~> 1.4"},
+      {:nested_filter, "~> 1.2.2"}
+    ]
   end
 end

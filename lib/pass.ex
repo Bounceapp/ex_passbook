@@ -50,6 +50,12 @@ defmodule Passbook.Pass do
 
   def generate_json(%Passbook.Pass{} = pass) do
     # TODO: validations (only one type of pass is present, date formats, etc...)
+
     Jason.encode!(pass)
+    |> Jason.decode!()
+    |> NestedFilter.drop_by_key(["__struct__"])
+    |> NestedFilter.drop_by_value([nil, %{}])
+    |> Passbook.Helpers.camelize()
+    |> Jason.encode!()
   end
 end

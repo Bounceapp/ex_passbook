@@ -1,3 +1,4 @@
 %{
   "jason": {:hex, :jason, "1.4.0", "e855647bc964a44e2f67df589ccf49105ae039d4179db7f6271dfd3843dc27e6", [:mix], [{:decimal, "~> 1.0 or ~> 2.0", [hex: :decimal, repo: "hexpm", optional: true]}], "hexpm", "79a3791085b2a0f743ca04cec0f7be26443738779d09302e01318f97bdb82121"},
+  "nested_filter": {:hex, :nested_filter, "1.2.2", "54d02ad0d34a2a020462dd13bf560b44d5bdfa819120e3eed35c474ab63be3ff", [:mix], [], "hexpm", "cd4c6bab689cddf46177ffcc49f47f7afc42b8f0adc7245a37e08c943c47206c"},
 }

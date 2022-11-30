@@ -1,21 +1,6 @@
 # Passbook
 
-**TODO: Add description**
+Elixir library to create Apple Wallet (.pkpass) files (Apple Wallet has previously been known as Passbook in iOS 6 to iOS 8).
 
-## Installation
-
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `passbook` to your list of dependencies in `mix.exs`:
-
-```elixir
-def deps do
-  [
-    {:passbook, "~> 0.1.0"}
-  ]
-end
-```
-
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at <https://hexdocs.pm/passbook>.
-
+See the [Wallet Topic Page](https://developer.apple.com/wallet/) and the
+[Wallet Developer Guide](https://developer.apple.com/library/ios/documentation/UserExperience/Conceptual/PassKit_PG/index.html#//apple_ref/doc/uid/TP40012195) for more information about Apple Wallet.

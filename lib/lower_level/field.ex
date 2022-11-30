@@ -43,7 +43,7 @@ defmodule Passbook.LowerLevel.Field do
     def encode(struct, opts) do
       Jason.Encode.map(
         %{
-          Map.from_struct(struct)
+          struct
           | data_detector_types: @data_detector_types_mapping[struct.data_detector_types],
             text_alignment: @text_alignment_mapping[struct.text_alignment]
         },

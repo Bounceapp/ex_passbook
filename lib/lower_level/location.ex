@@ -3,6 +3,7 @@ defmodule Passbook.LowerLevel.Location do
   Information about a location.
   """
 
+  @derive Jason.Encoder
   defstruct altitude: nil,
             latitude: nil,
             longitude: nil,
