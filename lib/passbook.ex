@@ -34,11 +34,19 @@ defmodule Passbook do
               value: "my-value"
             }
           ]
-        }}, ["icon.png": "path/to/file.png", "icon@2x.png": "path/to/file.png"], "path/to/certificate.pem", "path/to/key.pem", "password", target_path: System.tmp_dir!(), pass_name: "mypass")
+        }}, ["icon.png": "path/to/file.png", "icon@2x.png": "path/to/file.png"], "path/to/wwdr.pem", "path/to/certificate.pem", "path/to/key.pem", "password", target_path: System.tmp_dir!(), pass_name: "mypass")
       {:ok, "path/to/generated/mypass.pkpass"}
 
   """
-  def generate(%Passbook.Pass{} = pass, files, certificate_path, key_path, password, opts \\ []) do
+  def generate(
+        %Passbook.Pass{} = pass,
+        files,
+        wwdr_path,
+        certificate_path,
+        key_path,
+        password,
+        opts \\ []
+      ) do
     # Options setup
     default = [
       target_path: System.tmp_dir!(),
@@ -67,7 +75,7 @@ defmodule Passbook do
       target_path <> "signature",
       certificate_path,
       key_path,
-      Application.app_dir(:passbook, "priv/wwdr.pem"),
+      wwdr_path,
       password
     )
 
