@@ -10,11 +10,16 @@ defmodule Passbook.LowerLevel.Field do
     change_message: nil,
     data_detector_types: nil,
     label: nil,
-    text_alignment: nil
+    text_alignment: nil,
+    date_style: nil,
+    ignores_time_zone: nil,
+    is_relative: nil,
+    time_style: nil
   ]
 
   @type text_alignment :: :left | :center | :right | :natural
   @type data_detector_types :: :phone_number | :link | :address | :calendar_event
+  @type date_time_styles :: :none | :short | :medium | :long | :full
 
   @type t() :: %__MODULE__{
           key: String.t(),
@@ -23,7 +28,11 @@ defmodule Passbook.LowerLevel.Field do
           change_message: String.t() | nil,
           label: String.t() | nil,
           data_detector_types: data_detector_types | nil,
-          text_alignment: text_alignment | nil
+          text_alignment: text_alignment | nil,
+          date_style: date_time_styles | nil,
+          ignores_time_zone: boolean() | nil,
+          is_relative: boolean() | nil,
+          time_style: date_time_styles | nil
         }
 
   defimpl Jason.Encoder do
@@ -40,12 +49,22 @@ defmodule Passbook.LowerLevel.Field do
       address: "PKDataDetectorTypeAddress",
       calendar_event: "PKDataDetectorTypeCalendarEvent"
     ]
+
+    @date_time_styles_mapping [
+      none: "NSDateFormatterNoStyle",
+      short: "NSDateFormatterShortStyle",
+      medium: "NSDateFormatterMediumStyle",
+      long: "NSDateFormatterLongStyle",
+      full: "NSDateFormatterFullStyle"
+    ]
     def encode(struct, opts) do
       Jason.Encode.map(
         %{
           struct
           | data_detector_types: @data_detector_types_mapping[struct.data_detector_types],
-            text_alignment: @text_alignment_mapping[struct.text_alignment]
+            text_alignment: @text_alignment_mapping[struct.text_alignment],
+            date_style: @date_time_styles_mapping[struct.date_style],
+            time_style: @date_time_styles_mapping[struct.time_style]
         },
         opts
       )
