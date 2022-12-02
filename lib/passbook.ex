@@ -81,8 +81,11 @@ defmodule Passbook do
       File.ls!(target_path)
       |> Enum.map(&String.to_charlist/1)
 
-    :zip.create(target_path <> "#{opts[:pass_name]}.pkpass", files, cwd: target_path)
+    pkpass = :zip.create(target_path <> "#{opts[:pass_name]}.pkpass", files, cwd: target_path)
+
     if opts[:delete_raw_pass], do: Enum.map(files, &File.rm/1)
+
+    pkpass
   end
 
   defp create_manifest(files) do
