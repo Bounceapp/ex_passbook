@@ -51,11 +51,11 @@ defmodule Passbook.LowerLevel.Field do
     ]
 
     @date_time_styles_mapping [
-      none: "NSDateFormatterNoStyle",
-      short: "NSDateFormatterShortStyle",
-      medium: "NSDateFormatterMediumStyle",
-      long: "NSDateFormatterLongStyle",
-      full: "NSDateFormatterFullStyle"
+      none: "PKDateStyleNone",
+      short: "PKDateStyleShort",
+      medium: "PKDateStyleMedium",
+      long: "PKDateStyleLong",
+      full: "PKDateStyleFull"
     ]
     def encode(struct, opts) do
       Jason.Encode.map(
