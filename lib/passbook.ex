@@ -9,6 +9,7 @@ defmodule Passbook do
   Options:
   - `target_path`: Where to generate the .pkpass file. Defaults to tmp folder.
   - `pass_name`: The name of the .pkpass file. Defaults to a random 8 char string.
+  - `delete_raw_pass` - If the raw pass files should be deleted, leaving only the .pkpass file. Defaults to `true`.
 
   ## Examples
 
@@ -41,7 +42,8 @@ defmodule Passbook do
     # Options setup
     default = [
       target_path: System.tmp_dir!(),
-      pass_name: :crypto.strong_rand_bytes(16) |> Base.encode16()
+      pass_name: :crypto.strong_rand_bytes(16) |> Base.encode16(),
+      delete_raw_pass: true
     ]
 
     opts = Keyword.merge(default, opts)
@@ -74,16 +76,13 @@ defmodule Passbook do
       File.copy(path, target_path <> Atom.to_string(filename))
     end)
 
-    IO.inspect(target_path: target_path)
-
-    # Zip the files on a .pkpass
+    # Zip the files on a .pkpass, and optionally delete them
     files =
       File.ls!(target_path)
       |> Enum.map(&String.to_charlist/1)
 
-    IO.inspect(target_path: target_path, files: files)
-
     :zip.create(target_path <> "#{opts[:pass_name]}.pkpass", files, cwd: target_path)
+    if opts[:delete_raw_pass], do: Enum.map(files, &File.rm/1)
   end
 
   defp create_manifest(files) do
