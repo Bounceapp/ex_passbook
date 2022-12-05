@@ -39,13 +39,23 @@ defmodule Passbook do
 
   """
   def generate(
-        %Passbook.Pass{} = pass,
+        pass,
         files,
         wwdr_path,
         certificate_path,
         key_path,
         password,
         opts \\ []
+      )
+
+  def generate(
+        %Passbook.Pass{} = pass,
+        files,
+        wwdr_path,
+        certificate_path,
+        key_path,
+        password,
+        opts
       ) do
     # Options setup
     default = [
@@ -89,12 +99,15 @@ defmodule Passbook do
       File.ls!(target_path)
       |> Enum.map(&String.to_charlist/1)
 
-    pkpass = :zip.create(target_path <> "#{opts[:pass_name]}.pkpass", files, cwd: target_path)
+    pkpass =
+      :zip.create(to_string(target_path <> "#{opts[:pass_name]}.pkpass"), files, cwd: target_path)
 
-    if opts[:delete_raw_pass], do: Enum.map(files, &File.rm/1)
+    if opts[:delete_raw_pass], do: Enum.map(files, &File.rm(target_path <> to_string(&1)))
 
     pkpass
   end
+
+  def generate(_, _, _, _, _, _, _), do: {:error, :invalid_data}
 
   defp create_manifest(files) do
     for(

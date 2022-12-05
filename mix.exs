@@ -4,7 +4,7 @@ defmodule Passbook.MixProject do
   def project do
     [
       app: :passbook,
-      version: "0.1.6",
+      version: "0.1.7",
       elixir: "~> 1.13",
       start_permanent: Mix.env() == :prod,
       description: "Elixir library to create Apple Wallet (.pkpass) files.",
@@ -18,7 +18,8 @@ defmodule Passbook.MixProject do
         # The main page in the docs
         main: "Passbook",
         extras: ["README.md"]
-      ]
+      ],
+      xref: [exclude: [:crypto]]
     ]
   end
 

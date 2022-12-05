@@ -12,7 +12,7 @@ This package can be installed by adding `passbook` to your list of dependencies 
 ```elixir
 def deps do
   [
-    {:passbook, "~> 0.1.0"}
+    {:passbook, "~> 0.1.7"}
   ]
 end
 ```
@@ -64,6 +64,6 @@ You will be asked for an export password (or export phrase), which you need to u
               value: "my-value"
             }
           ]
-        }}, ["icon.png": "path/to/file.png", "icon@2x.png": "path/to/file.png"], "path/to/certificate.pem", "path/to/key.pem", "password", target_path: System.tmp_dir!(), pass_name: "mypass")
+        }}, ["icon.png": "path/to/file.png", "icon@2x.png": "path/to/file.png"], "path/to/wwdr.pem", "path/to/certificate.pem", "path/to/key.pem", "password", target_path: System.tmp_dir!(), pass_name: "mypass")
       {:ok, "path/to/generated/mypass.pkpass"}
 ```
