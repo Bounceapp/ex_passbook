@@ -12,7 +12,7 @@ This package can be installed by adding `passbook` to your list of dependencies 
 ```elixir
 def deps do
   [
-    {:passbook, "~> 0.1.7"}
+    {:passbook, "~> 0.1.8"}
   ]
 end
 ```

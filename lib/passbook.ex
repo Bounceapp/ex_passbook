@@ -59,7 +59,7 @@ defmodule Passbook do
       ) do
     # Options setup
     default = [
-      target_path: System.tmp_dir!(),
+      target_path: get_tmp_dir(),
       pass_name: :crypto.strong_rand_bytes(16) |> Base.encode16(),
       delete_raw_pass: true
     ]
@@ -108,6 +108,15 @@ defmodule Passbook do
   end
 
   def generate(_, _, _, _, _, _, _), do: {:error, :invalid_data}
+
+  defp get_tmp_dir() do
+    tmp_dir = System.tmp_dir!()
+
+    cond do
+      String.slice(tmp_dir, -1..-1) == "/" -> tmp_dir
+      true -> tmp_dir <> "/"
+    end
+  end
 
   defp create_manifest(files) do
     for(
