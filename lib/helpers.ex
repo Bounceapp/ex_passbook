@@ -57,4 +57,20 @@ defmodule Passbook.Helpers do
     |> Enum.map(&__MODULE__.camelize/1)
     |> Map.new()
   end
+
+  def create_signature(
+        manifest_path,
+        signature_path,
+        certificate_path,
+        key_path,
+        wwdr_certificate_path,
+        password
+      ) do
+    case :os.cmd(
+           ~c"openssl smime -sign -signer #{certificate_path} -inkey #{key_path} -certfile #{wwdr_certificate_path} -in #{manifest_path} -out #{signature_path} -outform der -binary -passin pass:\"#{password}\""
+         ) do
+      [] -> :ok
+      error -> {:error, error}
+    end
+  end
 end

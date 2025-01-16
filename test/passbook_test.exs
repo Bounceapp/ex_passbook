@@ -4,8 +4,4 @@ defmodule PassbookTest do
 
   describe "" do
   end
-
-  test "it generates a pkpass file" do
-    assert Passbook.hello() == :world
-  end
 end

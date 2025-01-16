@@ -13,29 +13,30 @@ defmodule Passbook do
 
   ## Examples
 
-      iex> Passbook.generate(%Passbook.Pass{
-        background_color: "rgb(23, 187, 82)",
-        foreground_color: "rgb(100, 10, 110)",
-        barcode: %Passbook.LowerLevel.Barcode{
-          format: :qr,
-          alt_text: "1234",
-          message: "qr-code-content"
-        },
-        description: "This is a pass description",
-        organization_name: "My Organization",
-        pass_type_identifier: "123",
-        serial_number: "serial-number-123",
-        team_identifier: "team-identifier",
-        generic: %Passbook.PassStructure{
-          transit_type: :train,
-          primary_fields: [
-            %Passbook.LowerLevel.Field{
-              key: "my-key",
-              value: "my-value"
-            }
-          ]
-        }}, ["icon.png": "path/to/file.png", "icon@2x.png": "path/to/file.png"], "path/to/wwdr.pem", "path/to/certificate.pem", "path/to/key.pem", "password", target_path: System.tmp_dir!(), pass_name: "mypass")
-      {:ok, "path/to/generated/mypass.pkpass"}
+      iex> {:ok, path} = Passbook.generate(%Passbook.Pass{
+      ...>background_color: "rgb(23, 187, 82)",
+      ...>foreground_color: "rgb(100, 10, 110)",
+      ...>barcode: %Passbook.LowerLevel.Barcode{
+      ...>  format: :qr,
+      ...>  alt_text: "1234",
+      ...>  message: "qr-code-content"
+      ...>},
+      ...>description: "This is a pass description",
+      ...>organization_name: "My Organization",
+      ...>pass_type_identifier: "123",
+      ...>serial_number: "serial-number-123",
+      ...>team_identifier: "team-identifier",
+      ...>generic: %Passbook.PassStructure{
+      ...>  transit_type: :train,
+      ...>  primary_fields: [
+      ...>    %Passbook.LowerLevel.Field{
+      ...>      key: "my-key",
+      ...>      value: "my-value"
+      ...>    }
+      ...>  ]
+      ...>}}, ["icon.png": "priv/icon.png", "icon@2x.png": "priv/icon.png"], "priv/wwdr.pem", "priv/test.crt.pem", "priv/test.key.pem", "password", target_path: System.tmp_dir!(), pass_name: "mypass")
+      ...> String.ends_with?(path, "mypass.pkpass")
+      true
 
   """
   def generate(
@@ -80,14 +81,15 @@ defmodule Passbook do
     File.write(target_path <> "manifest.json", manifest_json)
 
     # Generate signature
-    create_signature(
-      target_path <> "manifest.json",
-      target_path <> "signature",
-      certificate_path,
-      key_path,
-      wwdr_path,
-      password
-    )
+    :ok =
+      Passbook.Helpers.create_signature(
+        target_path <> "manifest.json",
+        target_path <> "signature",
+        certificate_path,
+        key_path,
+        wwdr_path,
+        password
+      )
 
     # Copy all the files to the target folder
     Enum.each(files, fn {filename, path} ->
@@ -128,17 +130,4 @@ defmodule Passbook do
   end
 
   defp hash(file_content), do: :crypto.hash(:sha, file_content) |> Base.encode16(case: :lower)
-
-  defp create_signature(
-         manifest_path,
-         signature_path,
-         certificate_path,
-         key_path,
-         wwdr_certificate_path,
-         password
-       ),
-       do:
-         :os.cmd(
-           'openssl smime -sign -signer #{certificate_path} -inkey #{key_path} -certfile #{wwdr_certificate_path} -in #{manifest_path} -out #{signature_path} -outform der -binary -passin pass:"#{password}"'
-         )
 end

@@ -28,7 +28,7 @@ defmodule Passbook.Pass do
     foreground_color: nil,
     label_color: nil,
     logo_text: nil,
-    web_service_url: nil,
+    web_service_url: nil
   ]
 
   @type t() :: %__MODULE__{
