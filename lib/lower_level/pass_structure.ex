@@ -5,7 +5,6 @@ defmodule Passbook.PassStructure do
   These keys are used for all pass styles and partition the fields into the various parts of the pass.
   """
 
-  @derive Jason.Encoder
   defstruct auxiliary_fields: nil,
             back_fields: nil,
             header_fields: nil,
