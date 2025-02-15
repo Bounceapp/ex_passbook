@@ -29,7 +29,8 @@ defmodule Passbook.Pass do
     label_color: nil,
     logo_text: nil,
     web_service_url: nil,
-    authentication_token: nil
+    authentication_token: nil,
+    nfc: nil
   ]
 
   @type t() :: %__MODULE__{
@@ -55,7 +56,8 @@ defmodule Passbook.Pass do
           label_color: String.t() | nil,
           logo_text: String.t() | nil,
           web_service_url: String.t() | nil,
-          authentication_token: String.t() | nil
+          authentication_token: String.t() | nil,
+          nfc: Passbook.LowerLevel.Nfc.t() | nil
         }
 
   @doc """
@@ -70,10 +72,14 @@ defmodule Passbook.Pass do
       ...>   serial_number: "123456",
       ...>   team_identifier: "ABC123",
       ...>   web_service_url: "https://example.com/passes/",
-      ...>   authentication_token: "vxwxd7J8AlNNFPS8k0a0FfUFtq0ewzFdc"
+      ...>   authentication_token: "vxwxd7J8AlNNFPS8k0a0FfUFtq0ewzFdc",
+      ...>   nfc: %Passbook.LowerLevel.Nfc{
+      ...>     encryption_public_key: "1234567890",
+      ...>     message: "Hello, NFC!"
+      ...>   }
       ...> }
       iex> Passbook.Pass.generate_json(pass)
-      ~s({"authenticationToken":"vxwxd7J8AlNNFPS8k0a0FfUFtq0ewzFdc","description":"Ticket","formatVersion":1,"organizationName":"ACME Corp","passTypeIdentifier":"pass.com.acme.tickets","serialNumber":"123456","teamIdentifier":"ABC123","webServiceURL":"https://example.com/passes/"})
+      ~s({"authenticationToken":"vxwxd7J8AlNNFPS8k0a0FfUFtq0ewzFdc","description":"Ticket","formatVersion":1,"nfc":{"encryptionPublicKey":"1234567890","message":"Hello, NFC!"},"organizationName":"ACME Corp","passTypeIdentifier":"pass.com.acme.tickets","serialNumber":"123456","teamIdentifier":"ABC123","webServiceURL":"https://example.com/passes/"})
 
       iex> pass = %Passbook.Pass{
       ...>   description: "Event Pass",
