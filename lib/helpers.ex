@@ -8,7 +8,11 @@ defmodule Passbook.Helpers do
 
   # Camelize strings in a map
   def camelize(key) when is_binary(key) do
-    capitalized = Macro.camelize(key)
+    capitalized =
+      key
+      |> Macro.camelize()
+      |> String.replace("Url", "URL")
+
     <<first>> <> rest = capitalized
     String.downcase(<<first>>) <> rest
   end
