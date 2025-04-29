@@ -100,7 +100,9 @@ defmodule Passbook do
       |> Enum.map(&String.to_charlist/1)
 
     pkpass =
-      :zip.create(to_string(target_path <> "#{opts[:pass_name]}.pkpass"), files, cwd: target_path)
+      :zip.create(to_string(target_path <> "#{opts[:pass_name]}.pkpass"), files,
+        cwd: String.to_charlist(target_path)
+      )
 
     if opts[:delete_raw_pass], do: Enum.map(files, &File.rm(target_path <> to_string(&1)))
 
